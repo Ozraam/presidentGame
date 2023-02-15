@@ -1,6 +1,12 @@
 <script>
     import Title from "$lib/Title.svelte";
     import HomePageInput from "$lib/HomePageInput.svelte";
+    import { resetAllStore } from "$lib/stores.js";
+    import { onMount } from "svelte";
+
+    onMount(() => {
+        resetAllStore();
+    });
 </script>
 
 <main>

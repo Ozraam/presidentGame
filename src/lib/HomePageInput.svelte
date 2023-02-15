@@ -1,6 +1,6 @@
 <script>
     import { goto } from "$app/navigation";
-    import { usernameStore } from "./stores";
+    import { usernameStore, roomStore } from "./stores";
 
 
     export let username = '';
@@ -27,8 +27,9 @@
         }
 
         $usernameStore = username;
+        $roomStore = room;
 
-        goto(`/room/${room}`);
+        goto(`/room/${room}/join`);
     }
 
 </script>

@@ -16,18 +16,13 @@
     }
 
     function disconnect() {
+        socket.emit("disconnectFromRoom", {roomNumber: data.roomNumber, username: $usernameStore});
         $usernameStore = "";
         goto("/");
     }
 
-    onMount(() => {
-        socket.emit("joinRoom", {roomNumber: data.roomNumber, username: $usernameStore});
-        
-    });
-
     onDestroy(() => {
-        socket.emit("leaveRoom", {roomNumber: data.roomNumber, username: $usernameStore});
-        resetAllStore();
+        socket.emit("leaveRoom", {roomNumber: data.roomNumber});
     });
 
     

@@ -22,6 +22,8 @@
         justify-content: center;
 
         color: var(--color-secondary);
+
+        text-align: center;
         
     }
 

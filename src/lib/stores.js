@@ -8,6 +8,10 @@ export const noRoom = writable(false);
 
 export const gotoRoom = writable(-1);
 
+export const chatMessages = writable([]);
+
+export const roomStore = writable("");
+
 export function resetAllStore() {
     usernameStore.set("John Doe");
     players.set([]);
