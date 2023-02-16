@@ -1,19 +1,32 @@
 <script>
-    import {usernameStore} from "$lib/stores";
+    import {players, usernameStore} from "$lib/stores";
     import Title from '$lib/Title.svelte';
     import PlayersList from '$lib/PlayersList.svelte';
     import Chat from "$lib/Chat.svelte";
     import { goto } from "$app/navigation";
     import socket from "$lib/socket.js";
-    import { resetAllStore } from "$lib/stores.js";
-    import { onDestroy, onMount } from "svelte";
+    import { gameStartSateStore } from "$lib/stores.js";
+    import { onDestroy } from "svelte";
 
     /** @type {import('./$types').PageData} */
     export let data;
 
+    let started = false;
+
     function startGame() {
-        goto(`/game/${data.roomNumber}`);
+        if(!started) {
+            started = true;
+            socket.emit("startGame", {roomNumber: data.roomNumber});
+        }
     }
+
+    gameStartSateStore.subscribe((value) => {
+        if(value == "notStarted") {
+            started = false;
+        } else if(value == "started") {
+            goto(`/game/${data.roomNumber}`);
+        }
+    })
 
     function disconnect() {
         socket.emit("disconnectFromRoom", {roomNumber: data.roomNumber, username: $usernameStore});
@@ -36,7 +49,13 @@
     <Chat />
     <div class="menu__right">
         <button class="menu__button menu__disconnect" on:click={disconnect}>Disconnect</button>
-        <button class="menu__button" on:click={startGame}>Start</button>
+        {#if $players.length >= 4 && $players[0].name == $usernameStore && !started}
+            <button class="menu__button" on:click={startGame}>Start</button>
+        {/if}
+
+        {#if started} 
+            <button class="menu__button">Loading ...</button>
+        {/if}
     </div>
     </span>
 </div>
@@ -65,10 +84,10 @@
 
         border-radius: 28px;
 
-        background-color: var(--color-tertiary);
-        color: var(--color-primary);
+        background-color: #7a7171;
+        color: white;
         border: none;
-        box-shadow: 0px 0px 10px 0px var(--color-button-wrong);
+        box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
 
         cursor: pointer;
         transition: 0.2s;
@@ -76,25 +95,25 @@
 
     .menu__button:hover {
         transform: scale(1.1);
-        background-color: var(--color-tertiary-light);
+        background-color: #9a8f8f;
     }
 
     .menu__disconnect {
-        background-color: var(--color-button-wrong);
-        box-shadow: 0px 0px 10px 0px var(--color-tertiary);
+        background-color: #9e5555;
+        box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
     }
 
     .menu__disconnect:hover {
-        background-color: var(--color-button-wrong-hover);
-        box-shadow: 0px 0px 10px 0px var(--color-tertiary-light);
+        background-color: #b66a6a;
+        box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2);
     }
 
     .menu__button:active {
-        background-color: var(--color-tertiary);
+        background-color: #7a7171;
     }
 
     .menu__disconnect:active {
-        background-color: var(--color-button-wrong);
+        background-color: #9e5555;
     }
 
     

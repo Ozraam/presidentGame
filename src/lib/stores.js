@@ -1,6 +1,6 @@
 import { writable } from "svelte/store";
 
-export const usernameStore = writable("John Doe");
+export const usernameStore = writable("");
 
 export const players = writable([]);
 
@@ -11,6 +11,8 @@ export const gotoRoom = writable(-1);
 export const chatMessages = writable([]);
 
 export const roomStore = writable("");
+
+export const gameStartSateStore = writable(""); 
 
 export function resetAllStore() {
     usernameStore.set("John Doe");

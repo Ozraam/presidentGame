@@ -1,10 +1,14 @@
 <script>
     import Title from "$lib/Title.svelte";
     import HomePageInput from "$lib/HomePageInput.svelte";
-    import { resetAllStore } from "$lib/stores.js";
+    import { resetAllStore, roomStore, usernameStore } from "$lib/stores.js";
     import { onMount } from "svelte";
+    import socket from "$lib/socket";
 
     onMount(() => {
+        if($usernameStore != "") {
+            socket.emit("disconnectFromRoom", {roomNumber: $roomStore, username: $usernameStore});
+        }
         resetAllStore();
     });
 </script>

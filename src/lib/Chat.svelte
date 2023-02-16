@@ -7,6 +7,7 @@
 
         socket.emit("chat", {message: input_text, name: $usernameStore, roomNumber: $roomStore});
         input_text = "";
+        setTimeout(scrollToBottom, 1000);
     }
 
     function scrollToBottom() {
@@ -26,6 +27,8 @@
             sendMessage();
         }
     }
+
+    
 
     let input_text = "";
 </script>

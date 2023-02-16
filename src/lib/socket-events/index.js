@@ -3,3 +3,4 @@
 import "./getPlayers.js";
 import "./gotoRoom.js";
 import "./getChat.js";
+import "./gameStateStart.js";
