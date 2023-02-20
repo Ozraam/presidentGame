@@ -35,7 +35,7 @@
     }
 
     onDestroy(() => {
-        socket.emit("leaveRoom", {roomNumber: data.roomNumber});
+        socket.emit("leaveRoom", {roomNumber: data.roomNumber, username: $usernameStore});
     });
 
     

@@ -14,6 +14,9 @@ export const roomStore = writable("");
 
 export const gameStartSateStore = writable(""); 
 
+
+export const gameState = writable({});
+
 export function resetAllStore() {
     usernameStore.set("John Doe");
     players.set([]);
